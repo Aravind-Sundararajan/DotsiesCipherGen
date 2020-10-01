@@ -7,7 +7,6 @@
 #include <sstream>
 #include <string>
 #include <cstring>
-#include <gmp.h>
 #include <float.h>
 #include <math.h>
 #include <limits>

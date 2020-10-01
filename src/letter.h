@@ -1,32 +1,54 @@
 #ifndef LET_H_
 #define LET_H_
+#include "base.h"
+using namespace std;
+
 class letter
 {
 	public:
-		bool* b[5];		
+		bool b[5];		
 		//destructor
 		~letter()
 		{
 		};
 
-		//copy constructor
-		letter(letter& l)
+		letter()
 		{
+			for (int x =0; x < 5; x++)
+				b[x] = true;
+		}
+
+		//copy constructor
+		letter(const letter& l)
+		{
+			for (int x = 0; x < 5; x++)
+				b[x] = l.b[x];
 		};
 
 
 		//copy assignment constructor
-		letter& operator=(letter& l)
+		letter& operator=(const letter& l)
 		{
-			b = l.b;
+			for (int x = 0; x < 5; x++)
+				b[x] = l.b[x];
+
+
+			return *this;
 		};
 
 		//print as bool array
 		void printb()
 		{
-			for (int x = 0; x < 5; x++)
-				
+			cout << "printing letter:" << endl;
+			for (int x = 0; x < 5; x++){
+				if (b[x]){
+					cout << "#";
+				}else{
+					cout << " ";
+				}
+			}
+			cout << endl;
 		};
 
-}
+};
 #endif
