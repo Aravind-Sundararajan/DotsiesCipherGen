@@ -9,6 +9,10 @@ letter.o:
 	$(CC) $(CFLAGS) -c $(srcdir)letter.cpp -o $(bindir)letter.o
 word.o:
 	$(CC) $(CFLAGS) -c $(srcdir)word.cpp -o $(bindir)word.o
+phrase.o:
+	$(CC) $(CFLAGS) -c $(srcdir)phrase.cpp -o $(bindir)phrase.o
+mat.o:
+	$(CC) $(CFLAGS) -c $(srcdir)mat.cpp -o $(bindir)mat.o
 
 test: base.o letter.o word.o
 	$(CC) $(CFLAGS) $(srcdir)test_letter.cpp -o $(bindir)test

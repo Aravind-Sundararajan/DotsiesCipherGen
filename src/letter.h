@@ -36,6 +36,17 @@ class letter
 			return *this;
 		};
 
+		//getters
+		bool operator()(size_t x) const
+		{
+			return b[x];
+		}
+
+		bool get(size_t x) const
+		{
+			return b[x];
+		}
+
 		//print as bool array
 		void printb()
 		{

@@ -9,13 +9,13 @@ using namespace std;
 class mat
 {
 	public:
-		bool* elem[] {};
-		int n = 0;
+		bool *elem {};
+		size_t n = 0;
 		
 		//default constructor
 		mat()
 		{
-			elem = new bool[5];
+			elem = new bool[5]{};
 			n=1;
 		}
 		
@@ -30,9 +30,11 @@ class mat
 		{
 			n = m.n;
 			elem = new bool [5*n]{};
-			for (size_t x =0; x < n; x++)
+			for (size_t y =0; y < n; y++)
 			{
-				elem[x] = m.get(x);
+				for (size_t x = 0; x < 5; x++){
+					elem[x] = m.get(y,x);
+				}
 			}
 		}
 
@@ -41,11 +43,16 @@ class mat
 		{
 			n = p.n;
 			elem = new bool [5*n]{};
-			for (size_t x =0; x < n; x++)
+			size_t c = 0;
+			for (size_t y = 0; y < n; y++)
 			{
-				for (size_t y =0; y < 5; y++)
+				word this_word = p.get(y);
+				for (size_t z = 0; z < this_word.n; z++)
 				{
-					elem[5*x + y] = (p.get(x)).get(y);
+					for (size_t x = 0; x < 5; x++){
+						elem[c] = (this_word.get(z)).get(x);
+						c++;
+					}
 				}
 			}
 		}
@@ -56,11 +63,24 @@ class mat
 			delete[] elem;
 			n = m.n;
 			elem = new bool [5*n]{};
-			for (size_t x =0; x < n; x++)
+			for (size_t y =0; y < n; y++)
 			{
-				elem[x] = m.get(x);
+				for (size_t x =0; x<5; x++){
+					elem[5*y + x] = m.get(y,x);
+				}
 			}
 			return *this;
+		}
+
+		//getters
+		bool get(size_t y, size_t x) const
+		{
+			return elem[y*5 + x];
+		}
+
+		bool operator()(size_t y, size_t x) const
+		{
+			return elem[y*5 + x];
 		}
 };
 
