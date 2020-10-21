@@ -15,6 +15,13 @@ class phrase
 			words = new word[1]{};
 			n = 1;
 		};
+		
+		phrase(const word w)
+		{
+			words = new word[1]{};
+			n = 1;
+			words[0] = w;
+		};
 
 		//destructor
 		~phrase()

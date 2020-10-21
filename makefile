@@ -11,12 +11,14 @@ word.o:
 	$(CC) $(CFLAGS) -c $(srcdir)word.cpp -o $(bindir)word.o
 phrase.o:
 	$(CC) $(CFLAGS) -c $(srcdir)phrase.cpp -o $(bindir)phrase.o
+kvp.o:	
+	$(CC) $(CFLAGS) -c $(srcdir)kvp.cpp -o $(bindir)kvp.o	
+table.o:
+	$(CC) $(CFLAGS) -c $(srcdir)table.cpp -o $(bindir)table.o		
 mat.o:
 	$(CC) $(CFLAGS) -c $(srcdir)mat.cpp -o $(bindir)mat.o
-
-test: base.o letter.o word.o
+test: base.o letter.o word.o phrase.o kvp.o table.o mat.o
 	$(CC) $(CFLAGS) $(srcdir)test_letter.cpp -o $(bindir)test
-
 all: test
 
 clean:

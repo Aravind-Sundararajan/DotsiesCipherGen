@@ -8,6 +8,7 @@
 using namespace std;
 class mat
 {
+	/*
 	public:
 		bool *elem {};
 		size_t n = 0;
@@ -15,7 +16,7 @@ class mat
 		//default constructor
 		mat()
 		{
-			elem = new bool[5]{};
+			elem = new bitset<5>{};
 			n=1;
 		}
 		
@@ -29,27 +30,24 @@ class mat
 		mat(const mat& m)
 		{
 			n = m.n;
-			elem = new bool [5*n]{};
+			elem = new bitset<5> [n]{};
 			for (size_t y =0; y < n; y++)
 			{
-				for (size_t x = 0; x < 5; x++){
-					elem[x] = m.get(y,x);
-				}
+				elem[x] = m.get(y,x);
 			}
 		}
-
+		
 		//phrase constructor
 		mat(const phrase& p)
 		{
 			n = p.n;
-			elem = new bool [5*n]{};
+			elem = new bitset [n]{};
 			size_t c = 0;
 			for (size_t y = 0; y < n; y++)
 			{
 				word this_word = p.get(y);
 				for (size_t z = 0; z < this_word.n; z++)
 				{
-					for (size_t x = 0; x < 5; x++){
 						elem[c] = (this_word.get(z)).get(x);
 						c++;
 					}
@@ -82,6 +80,7 @@ class mat
 		{
 			return elem[y*5 + x];
 		}
+		*/
 };
 
 

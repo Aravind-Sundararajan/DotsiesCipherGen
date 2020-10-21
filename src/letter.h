@@ -6,7 +6,7 @@ using namespace std;
 class letter
 {
 	public:
-		bool b[5];		
+		bitset<5> b;		
 		//destructor
 		~letter()
 		{
@@ -17,7 +17,13 @@ class letter
 			for (int x =0; x < 5; x++)
 				b[x] = true;
 		}
-
+		
+		letter(const bitset<5> bin)
+		{
+			for (int x =0; x < 5; x++)
+				b[x] = bin[x];
+		}
+		
 		//copy constructor
 		letter(const letter& l)
 		{
@@ -50,9 +56,9 @@ class letter
 		//print as bool array
 		void printb()
 		{
-			cout << "printing letter:" << endl;
+			//cout << "printing letter:" << endl;
 			for (int x = 0; x < 5; x++){
-				if (b[x]){
+				if (b.test(x)){
 					cout << "#";
 				}else{
 					cout << " ";

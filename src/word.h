@@ -16,6 +16,13 @@ class word
 			n = 1;
 		};
 
+		word(const letter l)
+		{
+			letters = new letter[1]{};
+			n = 1;
+			letters[0] = l;
+		};
+		
 		//destructor
 		~word()
 		{
