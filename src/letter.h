@@ -8,64 +8,26 @@ class letter
 	public:
 		bitset<5> b;		
 		//destructor
-		~letter()
-		{
-		};
+		~letter();
 
-		letter()
-		{
-			for (int x =0; x < 5; x++)
-				b[x] = true;
-		}
+		letter();
 		
-		letter(const bitset<5> bin)
-		{
-			for (int x =0; x < 5; x++)
-				b[x] = bin[x];
-		}
+		letter(const bitset<5> bin);
 		
 		//copy constructor
-		letter(const letter& l)
-		{
-			for (int x = 0; x < 5; x++)
-				b[x] = l.b[x];
-		};
+		letter(const letter& l);
 
 
 		//copy assignment constructor
-		letter& operator=(const letter& l)
-		{
-			for (int x = 0; x < 5; x++)
-				b[x] = l.b[x];
-
-
-			return *this;
-		};
+		letter& operator=(const letter& l);
 
 		//getters
-		bool operator()(size_t x) const
-		{
-			return b[x];
-		}
+		bool operator()(size_t x) const;
 
-		bool get(size_t x) const
-		{
-			return b[x];
-		}
+		bool get(size_t x) const;
 
 		//print as bool array
-		void printb()
-		{
-			//cout << "printing letter:" << endl;
-			for (int x = 0; x < 5; x++){
-				if (b.test(x)){
-					cout << "#";
-				}else{
-					cout << " ";
-				}
-			}
-			cout << endl;
-		};
+		void printb();
 
 };
 #endif

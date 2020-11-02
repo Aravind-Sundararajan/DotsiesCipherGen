@@ -10,68 +10,24 @@ class phrase
 		word* words{};
 		size_t n = 0;
 		//default constructor
-		phrase()
-		{
-			words = new word[1]{};
-			n = 1;
-		};
+		phrase();
 		
-		phrase(const word w)
-		{
-			words = new word[1]{};
-			n = 1;
-			words[0] = w;
-		};
+		phrase(const word w);
 
 		//destructor
-		~phrase()
-		{
-			delete[] words;
-		};
+		~phrase();
 
 		//copy constructor
-		phrase(const phrase& p)
-		{
-			n = p.n;
-			words = new word [n]{};
-			for (size_t x =0; x < n; x++)
-			{
-				words[x] = p.get(x);
-			}
-		}
+		phrase(const phrase& p);
 
 		//assignment copy
-		phrase& operator=(const phrase& p)
-		{
-			delete[] words;
-			n = p.n;
-			words = new word[n]{};
-			for (size_t x = 0; x < n; x++)
-			{
-				words[x] = p.get(x);
-			}
-			return *this;
-		};
+		phrase& operator=(const phrase& p);
 
-		word& operator()(size_t x) const
-		{
-			return words[x];
-		}
+		word& operator()(size_t x) const;
 
-		word& get(size_t x) const
-		{
-			return words[x];
-		}
+		word& get(size_t x) const;
 
-		void print()
-		{
-			for (size_t x = 0; x < n; x++){
-				get(x).print();
-			}
-		}
-
-
-
+		void print();
 };
 
 #endif
