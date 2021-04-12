@@ -1,0 +1,6 @@
+[submodule "lib/master"]
+	path = lib/master
+	url = https://github.com/todorico/unidraw.git
+[submodule "lib/unidraw"]
+	path = lib/unidraw
+	url = https://github.com/todorico/unidraw.git

@@ -27,7 +27,7 @@ parser& parser::operator=(const parser& p)
 
 void parser::translate(char* plaintext)
 {
-	for (int x = 0; x < strlen(plaintext) ; x++){
+	for (std::size_t x = 0; x < strlen(plaintext) ; x++){
 		//cout << plaintext[x] << " : " << tab->get(plaintext[x]) << endl;
 		letter l(tab->get(plaintext[x]));
 		l.printb();

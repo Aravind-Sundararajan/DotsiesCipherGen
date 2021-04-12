@@ -14,7 +14,7 @@ letter::letter(const bitset<5> bin)
 {
 	for (int x =0; x < 5; x++)
 		b[x] = bin[x];
-}
+};
 
 //copy constructor
 letter::letter(const letter& l)

@@ -1,9 +1,11 @@
 #include "kvp.h"
 using namespace std;
 
-kvp::kvp(){
+kvp::kvp()
+{
 	this->key = 'a';
 }
+
 kvp::kvp(char f, bitset<5> s)
 {
 	this->key = f;

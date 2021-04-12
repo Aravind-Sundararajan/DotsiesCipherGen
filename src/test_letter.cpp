@@ -1,10 +1,9 @@
 #include "base.h"
 #include "letter.h"
-#include "word.h"
-#include "phrase.h"
 #include "kvp.h"
 #include "table.h"
 #include "parser.h"
+#include "ciphertext.h"
 #include <bitset>
 using namespace std;
 int main()
@@ -24,6 +23,6 @@ int main()
 	char test[] = "This is a test!";
 	parser ps(t);
 	ps.translate(test);
-	
+
 	return 1;
 }

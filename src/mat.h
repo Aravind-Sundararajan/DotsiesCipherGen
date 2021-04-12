@@ -2,8 +2,6 @@
 #define MAT_H_
 #include "base.h"
 #include "letter.h"
-#include "word.h"
-#include "phrase.h"
 
 using namespace std;
 class mat
@@ -12,20 +10,20 @@ class mat
 	public:
 		bool *elem {};
 		size_t n = 0;
-		
+
 		//default constructor
 		mat()
 		{
 			elem = new bitset<5>{};
 			n=1;
 		}
-		
+
 		//destructor
 		~mat()
 		{
 			delete[] elem;
 		}
-		
+
 		//copy constructor
 		mat(const mat& m)
 		{
@@ -36,7 +34,7 @@ class mat
 				elem[x] = m.get(y,x);
 			}
 		}
-		
+
 		//phrase constructor
 		mat(const phrase& p)
 		{
@@ -54,7 +52,7 @@ class mat
 				}
 			}
 		}
-		
+
 		//copy assignment
 		mat& operator=(const mat& m)
 		{
