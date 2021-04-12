@@ -35,5 +35,7 @@ public:
   ciphertext append(letter);
 
   void set_all(const ciphertext& c);
+
+  void print();
 };
 #endif

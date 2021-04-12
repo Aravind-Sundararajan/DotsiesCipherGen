@@ -25,11 +25,13 @@ parser& parser::operator=(const parser& p)
 	return *this;
 };
 
-void parser::translate(char* plaintext)
+ciphertext parser::translate(char* plaintext)
 {
-	for (std::size_t x = 0; x < strlen(plaintext) ; x++){
-		//cout << plaintext[x] << " : " << tab->get(plaintext[x]) << endl;
+	std::size_t slen = strlen(plaintext);
+	ciphertext c(slen);
+	for (std::size_t x = 0; x < slen ; x++){
 		letter l(tab->get(plaintext[x]));
-		l.printb();
+		c.set(x,l);
 	}
+	return c;
 };

@@ -6,14 +6,14 @@ using namespace std;
 class letter
 {
 	public:
-		bitset<5> b;		
+		bitset<5> b;
 		//destructor
 		~letter();
 
 		letter();
-		
+
 		letter(const bitset<5> bin);
-		
+
 		//copy constructor
 		letter(const letter& l);
 

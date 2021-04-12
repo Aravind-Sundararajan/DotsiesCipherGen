@@ -33,8 +33,9 @@ ciphertext::ciphertext(const ciphertext& c)
 ciphertext& ciphertext::operator=(const ciphertext& c)
 {
   size = c.size;
+  delete[] phrase;
   phrase = new letter [size]{};
-	for (std::size_t x = 0; x < 5; x++){
+	for (std::size_t x = 0; x < size; x++){
     phrase[x] = c.phrase[x];
   }
 
@@ -78,4 +79,11 @@ void ciphertext::set_all(const ciphertext& c)
     set(X,c(X));
   }
 
+}
+
+void ciphertext::print()
+{
+  for (std::size_t x = 0; x < size; x++){
+    phrase[x].printb();
+  }
 }

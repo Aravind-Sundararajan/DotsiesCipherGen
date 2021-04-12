@@ -3,6 +3,7 @@
 #include "letter.h"
 #include "kvp.h"
 #include "table.h"
+#include "ciphertext.h"
 #include "mat.h"
 using namespace std;
 class parser
@@ -21,7 +22,7 @@ class parser
 		//copy assignment
 		parser& operator=(const parser& p);
 
-		void translate(char* plaintext);
+		ciphertext translate(char* plaintext);
 
 };
 

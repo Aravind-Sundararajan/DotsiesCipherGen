@@ -8,12 +8,12 @@
 using namespace std;
 int main()
 {
-	/*
-	letter l(in);
-	word w(l);
-	phrase p(w);
-	kvp<char,bool*> k('a',in);
-	*/
+	//bitset<5> in;
+	//letter l(in);
+	//ciphertext c();
+	//kvp k('a',in);
+
+	/*	*/
 	table t;
 	char lol[] = "abcdefghijklmnopqrstuvwxyz;',.! ";
 	for (int x = 1; x < 33; x++){
@@ -22,7 +22,8 @@ int main()
 	}
 	char test[] = "This is a test!";
 	parser ps(t);
-	ps.translate(test);
-
+	ciphertext out;
+	out = ps.translate(lol);
+	out.print();
 	return 1;
 }
