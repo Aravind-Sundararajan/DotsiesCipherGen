@@ -34,8 +34,17 @@ public:
 
   ciphertext append(letter);
 
+  //setters
   void set_all(const ciphertext& c);
 
+  //printer
   void print();
+
+  //ops
+  void row_swap(size_t p1,size_t p2); //swap 2 rows of the bitsets
+  void column_swap(size_t p1,size_t p2); //swap letter of the ciphertext
+  void circle_shift(); //rotate ciphertext
+  void circle_shift(bool dir); //rotate ciphertext
+  void circle_shift(bool dir, int amount); //rotate ciphertext
 };
 #endif

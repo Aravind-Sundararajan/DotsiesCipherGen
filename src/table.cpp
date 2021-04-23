@@ -15,7 +15,7 @@ table::~table()
 		  if (t[i] != NULL){
 				delete t[i];
 		  }
-	}		
+	}
 	delete[] t;
 };
 
@@ -45,6 +45,13 @@ bitset<5> table::get(char key)
 	}
 };
 
+char table::get(bitset<5> value)
+{
+	int k = hash(value);
+	int h = (k % TABLE_SIZE);
+	return t[h]->key;
+};
+
 void table::put(char key,bitset<5> val)
 {
 	int k = hash(key);
@@ -60,13 +67,26 @@ void table::put(char key,bitset<5> val)
 
 int table::hash(char c)
 {
-	int hash = (int)c;	
-	//std::cout << "hash:" << hash << std::endl;
+	int hash = (int)c;
 	return hash;
-	
+};
+
+int table::hash(bitset<5> b)
+{
+	for (int x =0; x < TABLE_SIZE; x ++){
+		if (t[x] != NULL){
+			if (t[x]->value == b)
+				return hash(t[x]->key);
+		}
+	}
+	return hash(ERRORC);
 };
 
 void table::print()
 {
-	
+	for (int x =0; x < TABLE_SIZE; x ++){
+		if (t[x] != NULL){
+			std::cout << x << " : " << t[x]->key << std::endl;
+		}
+	}
 };

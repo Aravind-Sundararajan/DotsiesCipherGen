@@ -78,6 +78,7 @@ void ciphertext::set_all(const ciphertext& c)
   for (std::size_t X = 0; X < sz; X++){
     set(X,c(X));
   }
+  size = sz;
 
 }
 
@@ -86,4 +87,44 @@ void ciphertext::print()
   for (std::size_t x = 0; x < size; x++){
     phrase[x].printb();
   }
+}
+
+void ciphertext::circle_shift()
+{
+  //wrapper function that calls letter swap, swaps 2 rows in the ciphertext
+  for (std::size_t x = 0; x < size; x++){
+    phrase[x].circle_shift();
+  }
+}
+
+void ciphertext::circle_shift(bool dir)
+{
+  //wrapper function that calls letter swap, swaps 2 rows in the ciphertext
+  for (std::size_t x = 0; x < size; x++){
+    phrase[x].circle_shift(dir);
+  }
+}
+
+void ciphertext::circle_shift(bool dir,int amount)
+{
+  //wrapper function that calls letter swap, swaps 2 rows in the ciphertext
+  for (std::size_t x = 0; x < size; x++){
+    phrase[x].circle_shift(dir,amount);
+  }
+}
+
+void ciphertext::row_swap(size_t p1,size_t p2)
+{
+  //wrapper function that calls letter swap, swaps 2 rows in the ciphertext
+  for (std::size_t x = 0; x < size; x++){
+    phrase[x].swap(p1,p2);
+  }
+}
+
+void ciphertext::column_swap(size_t p1,size_t p2)
+{
+  letter temp;
+  temp = phrase[p1];
+  phrase[p1] = phrase[p2];
+  phrase[p2] = temp;
 }

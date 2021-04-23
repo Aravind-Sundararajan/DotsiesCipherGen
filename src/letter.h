@@ -26,8 +26,22 @@ class letter
 
 		bool get(size_t x) const;
 
+		//setters
+		void set(size_t x, bool v);
+
 		//print as bool array
 		void printb();
+
+		//circle_shift entire bitset by direction and position
+		void circle_shift();
+		void circle_shift(bool dir);
+		void circle_shift(bool dir, int amount);
+
+		//flip entire bitset
+		void flip();
+
+		//swap 2 values in bitset
+		void swap(size_t p1, size_t p2);
 
 };
 #endif

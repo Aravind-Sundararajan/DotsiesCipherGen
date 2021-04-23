@@ -24,6 +24,7 @@ class parser
 
 		ciphertext translate(char* plaintext);
 
+		void translate(const ciphertext& c, char* oStr);
 };
 
 #endif

@@ -35,3 +35,11 @@ ciphertext parser::translate(char* plaintext)
 	}
 	return c;
 };
+
+void parser::translate(const ciphertext& c, char* oStr)
+{
+	for (std::size_t x = 0; x < c.size ; x++){
+		oStr[x] = tab->get(c.get(x).b);
+	}
+	oStr[c.size] = 0;
+};
