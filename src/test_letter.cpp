@@ -28,46 +28,20 @@ int main()
 
 	char test[] = "sphinx of black quartz, judge my vow.";
 
-	//cout << "table:" << endl;
-	//t.print();
-
-	std::cout << "printing the plaintext:" << std::endl;
-	std::cout << test << std::endl;
-
 	parser ps(t);
 	ciphertext out;
 	std::size_t sz = strlen(test);
 	out = ps.translate(test);
 
-	// ciphertext bet;
-	// bet = ps.translate(lol);
-	// bet.print();
-
-	std::cout << "reconstituting the plaintext:" << std::endl;
 	char plaintext[sz];
-	plaintext[0] = 0;
+
+	for (int i =0; i < 10; i ++){
+		for (int j =0; j < 5; j ++){
+			out.row_shift(j);
+		}
+	}
 	ps.translate(out,plaintext);
-	cout << plaintext << endl;
-
-	//out.print();
-
-
-	std::cout << "circleshift clockwise 1:" << std::endl;
-	for (int i =0; i < 5; i ++){
-		out.circle_shift(true);
-		char plaintext_cs[sz];
-		ps.translate(out,plaintext_cs);
-		std::cout << plaintext_cs << std::endl;
-	}
-
-	std::cout << "circleshift CC 1:" << std::endl;
-	for (int i =0; i < 5; i ++){
-		out.circle_shift(false);
-		char plaintext_cs[sz];
-		ps.translate(out,plaintext_cs);
-		std::cout << plaintext_cs << std::endl;
-	}
-
+	std::cout << plaintext << std::endl;
 
 	auto stop = high_resolution_clock::now();
 

@@ -43,8 +43,9 @@ public:
   //ops
   void row_swap(size_t p1,size_t p2); //swap 2 rows of the bitsets
   void column_swap(size_t p1,size_t p2); //swap letter of the ciphertext
-  void circle_shift(); //rotate ciphertext
-  void circle_shift(bool dir); //rotate ciphertext
-  void circle_shift(bool dir, int amount); //rotate ciphertext
+  void column_shift(); //rotate ciphertext
+  void column_shift(bool dir); //rotate ciphertext
+  void column_shift(bool dir, int amount); //rotate ciphertext
+  void row_shift(std::size_t r); //rotate ciphertext
 };
 #endif
