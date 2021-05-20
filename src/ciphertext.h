@@ -26,15 +26,16 @@ public:
 	ciphertext& operator=(const ciphertext& l);
 
 	//getters
+  //operator overload
 	letter& operator()(std::size_t x) const;
-
+  //get
 	letter& get(std::size_t x) const;
-
+  //set
 	void set(std::size_t X, letter l);
-
+  //append
   ciphertext append(letter);
 
-  //setters
+  //set all
   void set_all(const ciphertext& c);
 
   //printer
