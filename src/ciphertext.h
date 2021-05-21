@@ -46,7 +46,7 @@ public:
   void column_swap(size_t p1,size_t p2); //swap letter of the ciphertext
   void column_shift(); //rotate ciphertext
   void column_shift(bool dir); //rotate ciphertext
-  void column_shift(bool dir, int amount); //rotate ciphertext
+  void column_shift(bool dir, int amount); //rotate ciphertext by amount and direction
   void row_shift(std::size_t r); //rotate ciphertext
 };
 #endif

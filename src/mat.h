@@ -5,7 +5,7 @@
 
 using namespace std;
 class mat
-{
+{//this class is under construction
 	/*
 	public:
 		bool *elem {};

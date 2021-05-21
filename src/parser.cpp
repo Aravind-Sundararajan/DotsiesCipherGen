@@ -1,45 +1,47 @@
 #include "parser.h"
 using namespace std;
-//default constructor
+                                             //default constructor
 parser::parser(table& tin)
 {
-	tab = &tin;
+  tab = &tin;
 };
 
-//destructor
+                                             //destructor
 parser::~parser()
 {
-//delete tab;
+                                             //delete tab;
 };
 
-//copy constructor
+                                             //copy constructor
 parser::parser(const parser& p)
 {
-	tab = p.tab;
+  tab = p.tab;
 };
 
-//copy assignment
+                                             //copy assignment
 parser& parser::operator=(const parser& p)
 {
-	tab = p.tab;
-	return *this;
+  tab = p.tab;
+  return *this;
 };
 
+                                             //translate function - transforms the character array plaintext into a ciphertext()
 ciphertext parser::translate(char* plaintext)
 {
-	std::size_t slen = strlen(plaintext);
-	ciphertext c(slen);
-	for (std::size_t x = 0; x < slen ; x++){
-		letter l(tab->get(plaintext[x]));
-		c.set(x,l);
-	}
-	return c;
+  std::size_t slen = strlen(plaintext);      //get the length of the ciphertext/plaintext
+  ciphertext c(slen);                        //length constructor for the ciphertext
+  for (std::size_t x = 0; x < slen ; x++){   //iterate over the length of the plaintext
+    letter l(tab->get(plaintext[x]));        //create a letter() with character input constructor
+    c.set(x,l);                              //set the ciphertext() index position x to letter() l
+  }
+  return c;                                  //return the ciphertext we just populated and constructed
 };
 
+                                             //translate function - transforms a ciphertext() into a character array plaintext
 void parser::translate(const ciphertext& c, char* oStr)
 {
-	for (std::size_t x = 0; x < c.size ; x++){
-		oStr[x] = tab->get(c.get(x).b);
-	}
-	oStr[c.size] = 0;
+  for (std::size_t x = 0; x < c.size ; x++){ //iterate over the number of characters in the plaintext
+    oStr[x] = tab->get(c.get(x).b);          //assign to character array oStr (cptr argument) by using the hash function on this letter()'s bitwise'
+  }
+  oStr[c.size] = 0;                          //we need to add a null terminator to the string
 };

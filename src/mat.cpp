@@ -1,5 +1,5 @@
 #include "mat.h"
-
+//this class is under construction
 /*
 bool *elem {};
 size_t n = 0;
