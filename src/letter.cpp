@@ -79,7 +79,7 @@ void letter::circle_shift()
 void letter::circle_shift(bool dir)
 {
   if (dir){                        //clockwise rotation (default rotation)
-  circle_shift()
+  circle_shift();
   }else{                           //anti-clockwise rotation of the bitset
   bool start = b[4];               //save the final bit in the bitset
   for (int x = 4; x > -1; x--)     //iterate through bits in the bitset in reverse starting from the final bit
