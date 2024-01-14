@@ -6,13 +6,13 @@
 #include "ciphertext.h"
 #include <bitset>
 #include <chrono>
+#include <iostream>
 using namespace std::chrono;
 
 using namespace std;
 int main()
 {
-	auto start = high_resolution_clock::now();
-
+	
 	//bitset<5> in;
 	//letter l(in);
 	//ciphertext c();
@@ -20,34 +20,39 @@ int main()
 
 	/*	*/
 	table t;
-	char lol[] = "abcdefghijklmnopqrstuvwxyz;',.! ";
+	char all_graphemes[] = "abcdefghijklmnopqrstuvwxyz;',.! ";
+
 	for (int x = 0; x < 32; x++){
 		bitset<5> in(x+1);
-		t.put(lol[x],in);
+		t.put(all_graphemes[x],in);
 	}
 
 	char test[] = "sphinx of black quartz, judge my vow.";
-
+	
 	parser ps(t);
 	ciphertext out;
-	std::size_t sz = strlen(test);
-	out = ps.translate(test);
 
-	char plaintext[sz];
+	out = ps.translate(test);
+	char* plaintext = test;
+	
 
 	for (int i =0; i < 10; i ++){
 		for (int j =0; j < 5; j ++){
 			out.row_shift(j);
 		}
 	}
+	
+	auto start = high_resolution_clock::now();
+
 	ps.translate(out,plaintext);
-	std::cout << plaintext << std::endl;
 
 	auto stop = high_resolution_clock::now();
 
 	auto duration = duration_cast<microseconds>(stop - start);
-	cout << "Time: "
-	         << duration.count() << " microseconds" << endl;
+	
+	std::cout << "Time: " << duration.count() << " microseconds" << std::endl;
+	
+	std::cout << plaintext << std::endl;
 
 	return 0;
 }

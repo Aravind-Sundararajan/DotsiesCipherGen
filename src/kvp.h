@@ -1,6 +1,8 @@
 #ifndef KVP_H_
 #define KVP_H_
 #include <bitset>
+#include <utility>
+
 using namespace std;
 class kvp //Key Value Pair
 {
