@@ -48,5 +48,6 @@ public:
   void column_shift(bool dir); //rotate ciphertext
   void column_shift(bool dir, int amount); //rotate ciphertext by amount and direction
   void row_shift(std::size_t r); //rotate ciphertext
+  void row_shift(std::size_t r, bool direction);
 };
 #endif

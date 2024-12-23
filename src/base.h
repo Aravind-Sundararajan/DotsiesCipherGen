@@ -17,4 +17,5 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <bitset>
+#include <ncurses.h>
 #endif

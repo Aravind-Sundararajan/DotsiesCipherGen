@@ -127,6 +127,24 @@ void ciphertext::row_shift(std::size_t r)
   phrase[size-1].b.set(r,temp);                          //set the final value with the temp we stored before.
 }
 
+void ciphertext::row_shift(std::size_t r, bool direction)
+{
+    if (direction) {
+        // Shift up
+        bool temp = phrase[0].b[r]; // Create a temp bool to store the bitwise at index r
+        for (std::size_t x = 0; x < size - 1; x++) { // Iterate over the number of letters in the ciphertext
+            phrase[x].b.set(r, phrase[x + 1].b[r]); // Rotate the bitwise up
+        }
+        phrase[size - 1].b.set(r, temp); // Set the final value with the temp we stored before
+    } else {
+        // Shift down
+        bool temp = phrase[size - 1].b[r]; // Create a temp bool to store the bitwise at index r
+        for (std::size_t x = size - 1; x > 0; x--) { // Iterate over the number of letters in the ciphertext
+            phrase[x].b.set(r, phrase[x - 1].b[r]); // Rotate the bitwise down
+        }
+        phrase[0].b.set(r, temp); // Set the final value with the temp we stored before
+    }
+}
                                                          //operation to swap 2 rows of the ciphertext()
 void ciphertext::row_swap(size_t p1,size_t p2)
 {

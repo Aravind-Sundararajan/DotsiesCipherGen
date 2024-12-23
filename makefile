@@ -20,7 +20,7 @@ parser.o: $(srcdir)parser.h
 test.o: $(srcdir)test_letter.cpp
 	$(CC) $(CFLAGS) $(INCLUDES) -c $(srcdir)test_letter.cpp -o $(bindir)test.o
 test: base.o letter.o kvp.o table.o mat.o ciphertext.o parser.o test.o
-	$(CC) $(CFLAGS) $(INCLUDES) -o test $(bindir)base.o $(bindir)letter.o $(bindir)kvp.o $(bindir)table.o $(bindir)mat.o $(bindir)ciphertext.o $(bindir)parser.o $(bindir)test.o
+	$(CC) $(CFLAGS) $(INCLUDES) -o test $(bindir)base.o $(bindir)letter.o $(bindir)kvp.o $(bindir)table.o $(bindir)mat.o $(bindir)ciphertext.o $(bindir)parser.o $(bindir)test.o -lncurses -lpanel
 clean:
 	rm -f *.exe test && cd $(bindir) && rm -f *.o
 all: test
