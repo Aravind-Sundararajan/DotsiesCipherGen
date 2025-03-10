@@ -30,7 +30,7 @@ class letter
 		void set(size_t x, bool v);
 
 		//print as bool array
-		void printb();
+		void printb() const;
 
 		//circle_shift entire bitset by direction and position
 		void circle_shift();

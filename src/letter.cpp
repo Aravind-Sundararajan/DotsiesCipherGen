@@ -54,7 +54,7 @@ void letter::set(size_t x, bool v)
 }
 
                                    //print as bool array
-void letter::printb()
+void letter::printb() const
 {
                                    //cout << "printing letter:" << endl;
   for (int x = 0; x < 5; x++){     //iterate over each of the 5 bits in bitset

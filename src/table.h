@@ -1,44 +1,43 @@
 #ifndef TABLE_H_
 #define TABLE_H_
+
 #include "base.h"
 #include "kvp.h"
-using namespace std;
+#include <memory>
+#include <vector>
+
 class table
 {
 	private:
-		const int TABLE_SIZE = 128; //
-		kvp ** t;
-		bitset<5> ERROR = bitset<5>(33);
-		char ERRORC = '#';
+		static const int TABLE_SIZE = 128; //
+		std::vector<std::unique_ptr<kvp>> t;
+		const bitset<5> ERROR = bitset<5>(33);
+		const char ERRORC = '#';
+
+		// Private helper methods
+		int hash(char c) const;
+		int hash(bitset<5> b) const;
+		int findPosition(char key) const;
+
 	public:
-		//default constructor
+		// Constructors and destructor
 		table();
+		~table() = default;  // Vector handles cleanup
+		table(const table& other);
+		table& operator=(const table& other);
+		table(table&& other) noexcept = default;
+		table& operator=(table&& other) noexcept = default;
 
-		//destructor
-		~table();
+		// Core operations
+		bitset<5> get(char key, bool* found = nullptr) const;
+		char get(bitset<5> value, bool* found = nullptr) const;
+		bool put(char key, bitset<5> val);
+		void print() const;
 
-		//copy constructor
-		table(const table& tab);
-
-		//copy assignment
-		table& operator=(const table& t);
-
-		//get bitset based on the character input
-		bitset<5> get(char key);
-
-		//inverse operation, get the character from the bitset
-		char get(bitset<5> value);
-
-		//put - put a key value pair in the table
-		void put(char key,bitset<5> val);
-
-		//"hashing" functions (let's think of a smarter way to do this...)
-		int hash(char c);
-
-		int hash(bitset<5> b);
-
-		//print functions
-		void print();
+		// Capacity
+		bool isFull() const { return t.size() >= TABLE_SIZE; }
+		bool isEmpty() const { return t.empty(); }
+		size_t size() const { return t.size(); }
 };
 
 #endif

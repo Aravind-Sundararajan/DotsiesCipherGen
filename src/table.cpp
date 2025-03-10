@@ -1,98 +1,109 @@
 #include "table.h"
-using namespace std;
-table::table()
-{
-  t = new kvp*[TABLE_SIZE];                          //allocate an array of kvp(), this is perhaps bad / unsafe design
-  for (int i = 0; i < TABLE_SIZE; i++){              //iterate over the max table size
-    t[i] = NULL;                                     //set each table entry to NULL
-  }
-};
+#include <stdexcept>
+#include <algorithm>
+#include <iostream>
 
-                                                     //destructor
-table::~table()
-{
-  for (int i = 0; i < TABLE_SIZE; i++){              //iterate over the max table size
-    if (t[i] != NULL){                               //if the table entry is not NULL
-  delete t[i];                                       // delete the kvp (table is an array of kvp pointers)
+// Constructor - Initialize empty table
+table::table() : t(TABLE_SIZE) {}
+
+// Copy constructor - Deep copy of all elements
+table::table(const table& other) : t(TABLE_SIZE) {
+    for (size_t i = 0; i < TABLE_SIZE; i++) {
+        if (other.t[i]) {
+            t[i] = std::make_unique<kvp>(*other.t[i]);
+        }
     }
-  }
-  delete[] t;                                        //finally, delete the table
-};
+}
 
-                                                     //copy constructor
-table::table(const table& tab)
-{
-  t = tab.t;                                         //this is probably not correct, just setting this table() using t in the other table()
-};
+// Copy assignment operator - Deep copy with proper cleanup
+table& table::operator=(const table& other) {
+    if (this != &other) {
+        t.clear();
+        t.resize(TABLE_SIZE);
+        for (size_t i = 0; i < TABLE_SIZE; i++) {
+            if (other.t[i]) {
+                t[i] = std::make_unique<kvp>(*other.t[i]);
+            }
+        }
+    }
+    return *this;
+}
 
-                                                     //copy assignment
-table& table::operator=(const table& t)
-{
-  return *this;                                      //set this table() to other table()
-};
+// Get value by key
+bitset<5> table::get(char key, bool* found) const {
+    int pos = findPosition(key);
+    if (pos == -1 || !t[pos]) {
+        if (found) *found = false;
+        return ERROR;
+    }
+    if (found) *found = true;
+    return t[pos]->value;
+}
 
-                                                     //getters
-bitset<5> table::get(char key)
-{
-  int k = hash(key);                                 //get the position in the table using the hashing function
-  int h = (k % TABLE_SIZE);                          //modulo to get circular indexing
-  while (t[h] != NULL && t[h]->key != key)           //if the table entry at h is NULL or if the key is not the key we are looking for
-  h = (h+1) % TABLE_SIZE;                            //increment h (circular indexing by table size)
-  if (t[h] == NULL){                                 //if table entry is NULL
-  return ERROR;                                      //return ERROR bitset (this is perhaps a bad design but it works for now, we can reimplement this)
-  }
-  else {                                             //if we found the key
-  return t[h]->value;                                //return the bitset we found
-  }
-};
+// Get key by value
+char table::get(bitset<5> value, bool* found) const {
+    auto it = std::find_if(t.begin(), t.end(),
+        [&value](const auto& entry) {
+            return entry && entry->value == value;
+        });
+    
+    if (it != t.end()) {
+        if (found) *found = true;
+        return (*it)->key;
+    }
+    if (found) *found = false;
+    return ERRORC;
+}
 
-char table::get(bitset<5> value)
-{
-  int k = hash(value);                               //use the overloaded hash function to get the index
-  int h = (k % TABLE_SIZE);                          //circular indexing
-  return t[h]->key;                                  //return the key at index h
-};
+// Insert or update key-value pair
+bool table::put(char key, bitset<5> val) {
+    int pos = findPosition(key);
+    if (pos == -1) {
+        return false;  // Table is full
+    }
+    
+    t[pos] = std::make_unique<kvp>(key, val);
+    return true;
+}
 
+// Print table contents
+void table::print() const {
+    for (size_t i = 0; i < TABLE_SIZE; i++) {
+        if (t[i]) {
+            std::cout << i << " : " << t[i]->key << " -> ";
+            for (size_t j = 0; j < 5; j++) {
+                std::cout << t[i]->value[j];
+            }
+            std::cout << '\n';
+        }
+    }
+}
 
-                                                     //put a value in the table
-void table::put(char key,bitset<5> val)
-{
-  int k = hash(key);                                 //use hash function to get the index
-  int h = (k % TABLE_SIZE);                          //circular indexing using the modulo operator
-  while (t[h] != NULL && t[h]->key != key){          //look for the next available table entry
-  h = (h+1) % TABLE_SIZE;
-  }
-  if (t[h] != NULL){                                 //safe, delete this entry if it's not null
-  delete t[h];
-  }
-  t[h] = new kvp(key, val);                          //create a new key value
-};
+// Private helper methods
 
+// Hash function for characters
+int table::hash(char c) const {
+    return ((static_cast<int>(c) * 31) % TABLE_SIZE + TABLE_SIZE) % TABLE_SIZE;
+}
 
-                                                     //"hash"ing functions
-int table::hash(char c)
-{
-  int hash = (int)c;                                 //this is not very smart
-  return hash;
-};
+// Hash function for bitsets
+int table::hash(bitset<5> b) const {
+    return ((static_cast<int>(b.to_ulong()) * 31) % TABLE_SIZE + TABLE_SIZE) % TABLE_SIZE;
+}
 
-int table::hash(bitset<5> b)
-{
-  for (int x =0; x < TABLE_SIZE; x ++){              //iterate over elements in table
-  if (t[x] != NULL){                                 //if it's not NULL
-  if (t[x]->value == b)                              //value at position x matches the parameter bitset
-  return hash(t[x]->key);                            //return the key (integer index)
-  }
-  }
-  return hash(ERRORC);                               //otherwise return the error integer
-};
-
-                                                     //print function
-void table::print()
-{
-  for (int x =0; x < TABLE_SIZE; x ++){              //iterate the entries in the table
-  if (t[x] != NULL){                                 //if an entry is not null
-  std::cout << x << " : " << t[x]->key << std::endl; //cout the key and integer index
-  }
-  }
-};
+// Find position for a key using linear probing
+int table::findPosition(char key) const {
+    int start = hash(key);
+    int pos = start;
+    int probeCount = 0;
+    
+    while (probeCount < TABLE_SIZE) {
+        if (!t[pos] || t[pos]->key == key) {
+            return pos;
+        }
+        pos = (pos + 1) % TABLE_SIZE;
+        probeCount++;
+    }
+    
+    return -1;  // Table is full
+}

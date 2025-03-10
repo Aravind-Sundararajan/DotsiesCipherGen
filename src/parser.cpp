@@ -40,8 +40,8 @@ ciphertext parser::translate(char* plaintext)
                                              //translate function - transforms a ciphertext() into a character array plaintext
 void parser::translate(const ciphertext& c, char* oStr)
 {
-  for (std::size_t x = 0; x < c.size ; x++){ //iterate over the number of characters in the plaintext
-    oStr[x] = tab->get(c.get(x).b);          //assign to character array oStr (cptr argument) by using the hash function on this letter()'s bitwise'
+  for (std::size_t x = 0; x < c.size(); x++) {
+    oStr[x] = tab->get(c.get(x).b);  // b is a public member, this is the intended usage
   }
-  oStr[c.size] = 0;                          //we need to add a null terminator to the string
+  oStr[c.size()] = 0;
 };

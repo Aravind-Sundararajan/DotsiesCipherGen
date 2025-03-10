@@ -175,9 +175,9 @@ selection_made:
     mvwprintw(cipher_win, 1, 10 + bitset_index * 2, "^");
 
     // Print the bitsets of the ciphertext in the cipher panel
-    for (std::size_t i = 0; i < out.size; i++) {
+    for (std::size_t i = 0; i < out.size(); i++) {
         for (std::size_t j = 0; j < 5; j++) {
-            if (out.phrase[i].b[j]) {
+            if (out.getBit(i, j)) {
                 mvwaddch(cipher_win, i + 2, 10 + j * 2, ACS_CKBOARD);
             } else {
                 mvwaddch(cipher_win, i + 2, 10 + j * 2, ' ');
@@ -277,9 +277,9 @@ selection_made:
                 mvwprintw(cipher_win, 0, 2, " Cipher ");
                 attroff(COLOR_PAIR(1));
                 mvwprintw(cipher_win, 1, 10 + bitset_index * 2, "^");
-                for (std::size_t i = 0; i < out.size; i++) {
+                for (std::size_t i = 0; i < out.size(); i++) {
                     for (std::size_t j = 0; j < 5; j++) {
-                        if (out.phrase[i].b[j]) {
+                        if (out.getBit(i, j)) {
                             mvwaddch(cipher_win, i + 2, 10 + j * 2, ACS_CKBOARD);
                         } else {
                             mvwaddch(cipher_win, i + 2, 10 + j * 2, ' ');
@@ -323,9 +323,9 @@ selection_made:
                 mvwprintw(cipher_win, 0, 2, " Cipher ");
                 attroff(COLOR_PAIR(1));
                 mvwprintw(cipher_win, 1, 10 + bitset_index * 2, "^");
-                for (std::size_t i = 0; i < out.size; i++) {
+                for (std::size_t i = 0; i < out.size(); i++) {
                     for (std::size_t j = 0; j < 5; j++) {
-                        if (out.phrase[i].b[j]) {
+                        if (out.getBit(i, j)) {
                             mvwaddch(cipher_win, i + 2, 10 + j * 2, ACS_CKBOARD);
                         } else {
                             mvwaddch(cipher_win, i + 2, 10 + j * 2, ' ');
@@ -374,9 +374,9 @@ selection_made:
         mvwprintw(cipher_win, 0, 2, " Cipher ");
         attroff(COLOR_PAIR(1));
         mvwprintw(cipher_win, 1, 10 + bitset_index * 2, "^");
-        for (std::size_t i = 0; i < out.size; i++) {
+        for (std::size_t i = 0; i < out.size(); i++) {
             for (std::size_t j = 0; j < 5; j++) {
-                if (out.phrase[i].b[j]) {
+                if (out.getBit(i, j)) {
                     mvwaddch(cipher_win, i + 2, 10 + j * 2, ACS_CKBOARD);
                 } else {
                     mvwaddch(cipher_win, i + 2, 10 + j * 2, ' ');

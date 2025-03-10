@@ -1,53 +1,52 @@
 #ifndef CIP_H_
 #define CIP_H_
+
 #include "base.h"
 #include "letter.h"
-using namespace std;
+#include <vector>
+#include <memory>
 
-class ciphertext
-{
-
+class ciphertext {
 public:
-  letter *phrase{};
-  std::size_t size{};
+    // Constructors and destructor
+    ciphertext();
+    explicit ciphertext(std::size_t s);
+    ~ciphertext() = default;
+    ciphertext(const ciphertext& other);
+    ciphertext& operator=(const ciphertext& other);
+    ciphertext(ciphertext&& other) noexcept = default;
+    ciphertext& operator=(ciphertext&& other) noexcept = default;
 
-	//destructor
-	~ciphertext();
+    // Core operations
+    letter& operator()(std::size_t x);
+    const letter& operator()(std::size_t x) const;
+    letter& get(std::size_t x);
+    const letter& get(std::size_t x) const;
+    void set(std::size_t x, const letter& l);
+    ciphertext append(const letter& l);
+    void set_all(const ciphertext& c);
 
-	ciphertext();
+    // Transformations
+    void row_swap(size_t p1, size_t p2);
+    void column_swap(size_t p1, size_t p2);
+    void column_shift();
+    void column_shift(bool dir);
+    void column_shift(bool dir, int amount);
+    void row_shift(std::size_t r);
+    void row_shift(std::size_t r, bool direction);
 
-  //size constructor
-	ciphertext(std::size_t s);
+    // Utility
+    void print() const;
+    std::size_t size() const { return phrase.size(); }
+    bool empty() const { return phrase.empty(); }
 
-	//copy constructor
-	ciphertext(const ciphertext& c);
+    // Add bit access method
+    bool getBit(std::size_t letterIndex, std::size_t bitIndex) const {
+        return phrase[letterIndex].b[bitIndex];
+    }
 
-	//copy assignment constructor
-	ciphertext& operator=(const ciphertext& l);
-
-	//getters
-  //operator overload
-	letter& operator()(std::size_t x) const;
-  //get
-	letter& get(std::size_t x) const;
-  //set
-	void set(std::size_t X, letter l);
-  //append
-  ciphertext append(letter);
-
-  //set all
-  void set_all(const ciphertext& c);
-
-  //printer
-  void print();
-
-  //ops
-  void row_swap(size_t p1,size_t p2); //swap 2 rows of the bitsets
-  void column_swap(size_t p1,size_t p2); //swap letter of the ciphertext
-  void column_shift(); //rotate ciphertext
-  void column_shift(bool dir); //rotate ciphertext
-  void column_shift(bool dir, int amount); //rotate ciphertext by amount and direction
-  void row_shift(std::size_t r); //rotate ciphertext
-  void row_shift(std::size_t r, bool direction);
+private:
+    std::vector<letter> phrase;
 };
+
 #endif
