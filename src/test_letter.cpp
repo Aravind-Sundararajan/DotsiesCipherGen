@@ -151,12 +151,14 @@ selection_made:
     for (int i = 0; i < 32; i++) {
         mvwprintw(left_win, i + 2, 1, "%c - %d", lol[i], i + 1);
         // Print the bitsets of the cipher key next to the number
-        bitset<5> b = t.get(lol[i]);
-        for (std::size_t j = 0; j < 5; j++) {
-            if (b[j]) {
-                mvwaddch(left_win, i + 2, 10 + j * 2, ACS_CKBOARD);
-            } else {
-                mvwaddch(left_win, i + 2, 10 + j * 2, ' ');
+        auto [found, b] = t.get(lol[i]);
+        if (found) {
+            for (std::size_t j = 0; j < 5; j++) {
+                if (b[j]) {
+                    mvwaddch(left_win, i + 2, 10 + j * 2, ACS_CKBOARD);
+                } else {
+                    mvwaddch(left_win, i + 2, 10 + j * 2, ' ');
+                }
             }
         }
     }
@@ -357,12 +359,14 @@ selection_made:
         mvwprintw(left_win, 1, 10 + bitset_index * 2, "^");
         for (int i = 0; i < 32; i++) {
             mvwprintw(left_win, i + 2, 1, "%c - %d", lol[i], i + 1);
-            bitset<5> b = t.get(lol[i]);
-            for (std::size_t j = 0; j < 5; j++) {
-                if (b[j]) {
-                    mvwaddch(left_win, i + 2, 10 + j * 2, ACS_CKBOARD);
-                } else {
-                    mvwaddch(left_win, i + 2, 10 + j * 2, ' ');
+            auto [found, b] = t.get(lol[i]);
+            if (found) {
+                for (std::size_t j = 0; j < 5; j++) {
+                    if (b[j]) {
+                        mvwaddch(left_win, i + 2, 10 + j * 2, ACS_CKBOARD);
+                    } else {
+                        mvwaddch(left_win, i + 2, 10 + j * 2, ' ');
+                    }
                 }
             }
         }

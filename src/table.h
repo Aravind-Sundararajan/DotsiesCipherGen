@@ -5,14 +5,13 @@
 #include "kvp.h"
 #include <memory>
 #include <vector>
+#include <utility>
 
 class table
 {
 	private:
 		static const int TABLE_SIZE = 128; //
 		std::vector<std::unique_ptr<kvp>> t;
-		const bitset<5> ERROR = bitset<5>(33);
-		const char ERRORC = '#';
 
 		// Private helper methods
 		int hash(char c) const;
@@ -29,8 +28,8 @@ class table
 		table& operator=(table&& other) noexcept = default;
 
 		// Core operations
-		bitset<5> get(char key, bool* found = nullptr) const;
-		char get(bitset<5> value, bool* found = nullptr) const;
+		std::pair<bool, bitset<5>> get(char key) const;
+		std::pair<bool, char> get(bitset<5> value) const;
 		bool put(char key, bitset<5> val);
 		void print() const;
 

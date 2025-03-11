@@ -30,9 +30,10 @@ ciphertext parser::translate(char* plaintext)
 {
   std::size_t slen = strlen(plaintext);      //get the length of the ciphertext/plaintext
   ciphertext c(slen);                        //length constructor for the ciphertext
-  for (std::size_t x = 0; x < slen ; x++){   //iterate over the length of the plaintext
-    letter l(tab->get(plaintext[x]));        //create a letter() with character input constructor
-    c.set(x,l);                              //set the ciphertext() index position x to letter() l
+  for (std::size_t x = 0; x < slen; x++) {
+    auto [found, bits] = tab->get(plaintext[x]);
+    letter l(found ? bits : bitset<5>());  // Use empty bitset for invalid chars
+    c.set(x, l);                              //set the ciphertext() index position x to letter() l
   }
   return c;                                  //return the ciphertext we just populated and constructed
 };
@@ -41,7 +42,8 @@ ciphertext parser::translate(char* plaintext)
 void parser::translate(const ciphertext& c, char* oStr)
 {
   for (std::size_t x = 0; x < c.size(); x++) {
-    oStr[x] = tab->get(c.get(x).b);  // b is a public member, this is the intended usage
+    auto [found, ch] = tab->get(c.get(x).b);
+    oStr[x] = found ? ch : ' ';  // Use space for invalid/unmapped values
   }
-  oStr[c.size()] = 0;
+  oStr[c.size()] = 0;  // Add null terminator
 };

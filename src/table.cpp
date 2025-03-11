@@ -30,29 +30,25 @@ table& table::operator=(const table& other) {
 }
 
 // Get value by key
-bitset<5> table::get(char key, bool* found) const {
+std::pair<bool, bitset<5>> table::get(char key) const {
     int pos = findPosition(key);
     if (pos == -1 || !t[pos]) {
-        if (found) *found = false;
-        return ERROR;
+        return {false, bitset<5>()};
     }
-    if (found) *found = true;
-    return t[pos]->value;
+    return {true, t[pos]->value};
 }
 
 // Get key by value
-char table::get(bitset<5> value, bool* found) const {
+std::pair<bool, char> table::get(bitset<5> value) const {
     auto it = std::find_if(t.begin(), t.end(),
         [&value](const auto& entry) {
             return entry && entry->value == value;
         });
     
     if (it != t.end()) {
-        if (found) *found = true;
-        return (*it)->key;
+        return {true, (*it)->key};
     }
-    if (found) *found = false;
-    return ERRORC;
+    return {false, '\0'};
 }
 
 // Insert or update key-value pair
