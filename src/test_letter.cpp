@@ -5,11 +5,15 @@
 #include "ciphertext.h"
 #include <bitset>
 #include <chrono>
-#include <ncurses.h>
-#include <panel.h>
 #include <cstring>
 #include <cstdlib>
 #include <ctime>
+#include <iostream>
+
+#ifndef NO_NCURSES
+#include <ncurses.h>
+#include <panel.h>
+#endif
 
 using namespace std::chrono;
 using namespace std;
@@ -23,6 +27,8 @@ int main()
         t.put(lol[x],in);
     }
 
+#ifndef NO_NCURSES
+    // Ncurses interface
     initscr();            // Initialize the window
     start_color();        // Start color functionality
     cbreak();             // Line buffering disabled
@@ -99,6 +105,42 @@ selection_made:
         strncpy(test, options[choice], 255);
         test[255] = '\0'; // Ensure null termination
     }
+#else
+    // Simple console interface
+    cout << "DotsiesCipherGen - Plain text mode" << endl;
+    cout << "Available test phrases:" << endl;
+    cout << "1. waltz, nymph, for quick jigs vex bud." << endl;
+    cout << "2. sphinx of black quartz, judge my vow." << endl;
+    cout << "3. pack my box with five dozen liquor jugs." << endl;
+    cout << "4. mr. jock, tv quiz phd, bags few lynx." << endl;
+    cout << "5. [custom input]" << endl;
+    cout << "Enter choice (1-5): ";
+    
+    int choice;
+    cin >> choice;
+    cin.ignore(); // clear newline
+    
+    char test[256];
+    bool decrypter_mode = false;
+    
+    if (choice == 5) {
+        cout << "Enter your custom text: ";
+        cin.getline(test, 255);
+    } else if (choice >= 1 && choice <= 4) {
+        const char* phrases[] = {
+            "waltz, nymph, for quick jigs vex bud.",
+            "sphinx of black quartz, judge my vow.",
+            "pack my box with five dozen liquor jugs.",
+            "mr. jock, tv quiz phd, bags few lynx."
+        };
+        strncpy(test, phrases[choice - 1], 255);
+        test[255] = '\0';
+    } else {
+        cout << "Invalid choice, using default phrase" << endl;
+        strncpy(test, "waltz, nymph, for quick jigs vex bud.", 255);
+        test[255] = '\0';
+    }
+#endif
 
     parser ps(t);
     ciphertext out;
@@ -119,6 +161,7 @@ selection_made:
     ps.translate(out, plaintext);
     plaintext[sz] = '\0'; // Ensure null termination
 
+#ifndef NO_NCURSES
     clear(); // Clear the screen
 
     int left_panel_height = height;
@@ -151,7 +194,9 @@ selection_made:
     for (int i = 0; i < 32; i++) {
         mvwprintw(left_win, i + 2, 1, "%c - %d", lol[i], i + 1);
         // Print the bitsets of the cipher key next to the number
-        auto [found, b] = t.get(lol[i]);
+        auto result = t.get(lol[i]);
+        bool found = result.first;
+        std::bitset<5> b = result.second;
         if (found) {
             for (std::size_t j = 0; j < 5; j++) {
                 if (b[j]) {
@@ -359,7 +404,9 @@ selection_made:
         mvwprintw(left_win, 1, 10 + bitset_index * 2, "^");
         for (int i = 0; i < 32; i++) {
             mvwprintw(left_win, i + 2, 1, "%c - %d", lol[i], i + 1);
-            auto [found, b] = t.get(lol[i]);
+            auto result = t.get(lol[i]);
+            bool found = result.first;
+            std::bitset<5> b = result.second;
             if (found) {
                 for (std::size_t j = 0; j < 5; j++) {
                     if (b[j]) {
@@ -403,6 +450,45 @@ selection_made:
     del_panel(bitset_panel);
     delwin(bitset_win);
     endwin(); // End curses mode
+#else
+    // Simple console output
+    cout << "\nOriginal plaintext: " << test << endl;
+    cout << "Encrypted ciphertext:" << endl;
+    
+    // Display ciphertext as a grid of bits
+    for (std::size_t i = 0; i < out.size(); i++) {
+        cout << "Letter " << i << ": ";
+        for (std::size_t j = 0; j < 5; j++) {
+            cout << (out.getBit(i, j) ? "1" : "0");
+        }
+        cout << endl;
+    }
+    
+    cout << "\nDecrypted plaintext: " << plaintext << endl;
+    
+    // Interactive bit manipulation
+    cout << "\nSimple row shift manipulation:" << endl;
+    cout << "Enter bit row to manipulate (0-4) or -1 to quit: ";
+    int bitset_index;
+    cin >> bitset_index;
+    
+    while (bitset_index >= 0 && bitset_index < 5) {
+        cout << "Direction (0=left, 1=right): ";
+        bool direction;
+        cin >> direction;
+        
+        // Perform row shift
+        out.row_shift(bitset_index, direction);
+        
+        // Regenerate and update the plaintext
+        ps.translate(out, plaintext);
+        plaintext[sz] = '\0';
+        
+        cout << "Updated plaintext: " << plaintext << endl;
+        cout << "Enter bit row to manipulate (0-4) or -1 to quit: ";
+        cin >> bitset_index;
+    }
+#endif
 
     return 0;
 }
